@@ -1,15 +1,26 @@
-<script>
+<script lang="ts">
 import NewRestaurantForm from '../components/NewRestaurantForm.vue'
 import RestaurantCard from '../components/RestaurantCard.vue'
 import SideMenu from '../components/SideMenu.vue'
+import { defineComponent } from 'vue'
+import type { Restaurant } from '@/types'
 
-export default {
+/**
+ * Data Shape for DataProperty
+ */
+type DataShape = {
+  filterText: string
+  restaurantList: Restaurant[]
+  showNewForm: boolean
+}
+
+export default defineComponent({
   components: {
     NewRestaurantForm,
     RestaurantCard,
     SideMenu,
   },
-  data: () => ({
+  data: (): DataShape => ({
     filterText: '',
     restaurantList: [
       {
@@ -71,7 +82,7 @@ export default {
       showNewForm.value = true
     }
   },
-}
+})
 </script>
 
 <template>
