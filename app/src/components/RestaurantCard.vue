@@ -11,7 +11,6 @@ type Restaurant = {
   website: string
   status: string
 }
-//hallo
 
 export default defineComponent({
   props: {
