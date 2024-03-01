@@ -1,6 +1,11 @@
 <script>
 export default {
-  props: ['tagline'],
+  props: {
+    tagline: {
+      type: [String, Number],
+      default: 'this is default',
+    },
+  },
   data: () => ({
     navList: [
       {
