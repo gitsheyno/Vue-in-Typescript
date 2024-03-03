@@ -2,7 +2,7 @@
 import NewRestaurantForm from '../components/NewRestaurantForm.vue'
 import RestaurantCard from '../components/RestaurantCard.vue'
 import SideMenu from '../components/SideMenu.vue'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import type { Restaurant } from '@/types'
 
 /**
@@ -20,9 +20,9 @@ export default defineComponent({
     RestaurantCard,
     SideMenu,
   },
-  data: (): DataShape => ({
-    filterText: '',
-    restaurantList: [
+  setup() {
+    const filterText = ref('')
+    const restaurantList = ref<Restaurant[]>([
       {
         id: '9f995ce4-d2fc-4d00-af1d-6cb1647c6bd3',
         name: 'Quiche From a Rose',
@@ -44,9 +44,11 @@ export default defineComponent({
         website: 'www.penneforyourthoughts.com',
         status: 'Do Not Recommend',
       },
-    ],
-    showNewForm: false,
-  }),
+    ])
+
+    const showNewForm = ref(false)
+  },
+  data: (): DataShape => ({}),
   computed: {
     filteredRestaurantList(): Restaurant[] {
       return this.restaurantList.filter((restaurant) => {
