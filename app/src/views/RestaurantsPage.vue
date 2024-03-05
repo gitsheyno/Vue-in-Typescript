@@ -4,6 +4,7 @@ import RestaurantCard from '../components/RestaurantCard.vue'
 import SideMenu from '../components/SideMenu.vue'
 import { defineComponent, ref } from 'vue'
 import type { Restaurant } from '@/types'
+import { useRoute } from 'vue-router'
 
 /**
  * Data Shape for DataProperty
@@ -78,9 +79,8 @@ export default defineComponent({
     },
   },
   mounted() {
-    const route = this.$route
-
-    if (this.$route.query.new) {
+    const route = useRoute()
+    if (route.query.new) {
       this.showNewForm = true
     }
   },
