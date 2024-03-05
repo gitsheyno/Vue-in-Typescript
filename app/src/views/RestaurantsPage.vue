@@ -2,7 +2,7 @@
 import NewRestaurantForm from '../components/NewRestaurantForm.vue'
 import RestaurantCard from '../components/RestaurantCard.vue'
 import SideMenu from '../components/SideMenu.vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import type { Restaurant } from '@/types'
 import { useRoute } from 'vue-router'
 
@@ -48,36 +48,43 @@ export default defineComponent({
     ])
 
     const showNewForm = ref(false)
-  },
-  data: (): DataShape => ({}),
-  computed: {
-    filteredRestaurantList(): Restaurant[] {
-      return this.restaurantList.filter((restaurant) => {
+
+    const filteredRestaurantList = computed((): Restaurant[] => {
+      return restaurantList.value.filter((restaurant) => {
         if (restaurant.name) {
-          return restaurant.name.toLowerCase().includes(this.filterText.toLowerCase())
+          return restaurant.name.toLowerCase().includes(filterText.value.toLowerCase())
         } else {
-          return this.restaurantList
+          return restaurantList.value
         }
       })
-    },
-    numberOfRestaurants(): number {
-      return this.filteredRestaurantList.length
-    },
-  },
-  methods: {
-    addRestaurant(payload: Restaurant): void {
-      this.restaurantList.push(payload)
-      this.hideForm()
-    },
-    deleteRestaurant(payload: Restaurant) {
-      this.restaurantList = this.restaurantList.filter((restaurant) => {
+    })
+
+    const numberOfRestaurants = computed(() => {
+      return filteredRestaurantList.value.length
+    })
+
+    const addRestaurant = (payload: Restaurant) => {
+      restaurantList.value.push(payload)
+      hideForm()
+    }
+    const deleteRestaurant = (payload: Restaurant) => {
+      restaurantList.value = restaurantList.value.filter((restaurant) => {
         return restaurant.id !== payload.id
       })
-    },
-    hideForm() {
-      this.showNewForm = false
-    },
+    }
+    const hideForm = () => {
+      showNewForm.value = false
+    }
+
+    return {
+      numberOfRestaurants,
+      addRestaurant,
+      filteredRestaurantList,
+      deleteRestaurant,
+      hideForm,
+    }
   },
+  data: (): DataShape => ({}),
   mounted() {
     const route = useRoute()
     if (route.query.new) {
