@@ -1,28 +1,27 @@
-<script>
-export default {
-  props: {
-    tagline: {
-      type: [String, Number],
-      default: 'this is default',
-    },
+<script setup lang="ts">
+import { ref } from 'vue'
+
+defineProps({
+  tagline: {
+    type: String,
+    required: true,
   },
-  data: () => ({
-    navList: [
-      {
-        name: 'Home',
-        path: '/',
-      },
-      {
-        name: 'Restaurants',
-        path: '/restaurants',
-      },
-      {
-        name: 'Dishes',
-        path: '/dishes',
-      },
-    ],
-  }),
-}
+})
+
+const navList = ref([
+  {
+    name: 'Home',
+    path: '/',
+  },
+  {
+    name: 'Restaurants',
+    path: '/restaurants',
+  },
+  {
+    name: 'Dishes',
+    path: '/dishes',
+  },
+])
 </script>
 
 <template>
